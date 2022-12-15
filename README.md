@@ -1,70 +1,12 @@
-# Getting Started with Create React App
+## CSR 架構增加動態 meta tag
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 實作步驟
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. 使用 react-helmet-async 和 react-snap 來達成 open graph
+2. 使用 react-helmet-async 用來動態的增加 meta tag，我們可以依照每一頁想要呈現的 title, description 來設置
+3. 且要在原本的 public/index.html 中，將『基本的』、『預設的』 meta tag 加上 `data-react-helmet="true" data-rh="true"` ，他們是用告訴 react-helmet-async 這些 meta tag 是之後要被替代掉的。
+4. 但因為 CSR 的關係，爬蟲方面沒辦法正確的拿到『動態增加』的這些 meta tag，因此需要透過 react-snap 來幫我們做 pre-rendering 的工作
+5. react-snap 他所做的事情，就跟 Next.js 預設幫我們所做的是一樣的。
+6. 如果有使用過 Next.js 的話，應該會對 page 這個資料夾特別有印象，因為 Next.js 預設會將 page 裡的檔案在 build 的時候幫我們做
+   pre-rendering
+7. 因此可以發現到，當在 Next.js 架構下執行完 build 之後，在打包產生出來的資料夾內找到 pages 裡面的對應檔案

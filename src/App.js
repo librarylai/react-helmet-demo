@@ -29,9 +29,18 @@ function App() {
           pre-rendering
         </p>
         <p>因此可以發現到，當在 Next.js 架構下執行完 build 之後，在打包產生出來的資料夾內找到 pages 裡面的對應檔案 </p>
-        <Link to='/'>Home</Link>
-        <Link to='/book'>Book</Link>
-        <Link to='/product'>product</Link>
+        <div style={{ margin: '24px 0px', display: 'flex' }}>
+          <Link style={{ color: 'lightblue', marginRight: '16px' }} to='/'>
+            Home
+          </Link>
+          <Link style={{ color: 'lightblue', marginRight: '16px' }} to='/book'>
+            Book
+          </Link>
+          <Link style={{ color: 'lightblue', marginRight: '16px' }} to='/product'>
+            product
+          </Link>
+        </div>
+
         <Outlet />
       </header>
     </div>
