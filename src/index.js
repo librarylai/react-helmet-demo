@@ -2,44 +2,42 @@ import React from 'react'
 // import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
-// import reportWebVitals from './reportWebVitals'
+import Book from './containers/Book'
+import Product from './containers/Product'
 import { HelmetProvider } from 'react-helmet-async'
-// import { render } from 'react-snapshot'
 import { hydrate, render } from 'react-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-// render(
-//   <HelmetProvider>
-//     <App />
-//   </HelmetProvider>,
-//   document.getElementById('root')
-// )
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        path: 'book',
+        element: <Book />,
+      },
+      {
+        path: 'product',
+        element: <Product />,
+      },
+    ],
+  },
+])
 
 const rootElement = document.getElementById('root')
 if (rootElement.hasChildNodes()) {
   hydrate(
     <HelmetProvider>
-      <App />
+      <RouterProvider router={router}></RouterProvider>
     </HelmetProvider>,
     rootElement
   )
 } else {
   render(
     <HelmetProvider>
-      <App />
+      <RouterProvider router={router}></RouterProvider>
     </HelmetProvider>,
     rootElement
   )
 }
-// const root = ReactDOM.createRoot(document.getElementById('root'))
-// root.render(
-//   <React.StrictMode>
-//     <HelmetProvider>
-//       <App />
-//     </HelmetProvider>
-//   </React.StrictMode>
-// )
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals()
