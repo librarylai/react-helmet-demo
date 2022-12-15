@@ -4,14 +4,32 @@ import './index.css'
 import App from './App'
 // import reportWebVitals from './reportWebVitals'
 import { HelmetProvider } from 'react-helmet-async'
-import { render } from 'react-snapshot'
+// import { render } from 'react-snapshot'
+import { hydrate, render } from 'react-dom'
 
-render(
-  <HelmetProvider>
-    <App />
-  </HelmetProvider>,
-  document.getElementById('root')
-)
+// render(
+//   <HelmetProvider>
+//     <App />
+//   </HelmetProvider>,
+//   document.getElementById('root')
+// )
+
+const rootElement = document.getElementById('root')
+if (rootElement.hasChildNodes()) {
+  hydrate(
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>,
+    rootElement
+  )
+} else {
+  render(
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>,
+    rootElement
+  )
+}
 // const root = ReactDOM.createRoot(document.getElementById('root'))
 // root.render(
 //   <React.StrictMode>
