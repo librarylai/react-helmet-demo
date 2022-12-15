@@ -5,11 +5,11 @@ import './App.css'
 function App() {
   return (
     <div className='App'>
-      <Helmet>
+      <Helmet prioritizeSeoTags>
         <title>來自 helmet 的 pdf</title>
-        <meta property='og:title' content='來自 helmet 的 pdf' data-react-helmet='true' />
-        <meta property='og:description' content='來自 helmet 的 pdf Desc' data-react-helmet='true' />
-        <meta property='og:image' content='https://picsum.photos/id/2/200/200' data-react-helmet='true' />
+        <meta property='og:title' content='來自 helmet 的 pdf' data-react-helmet='true' data-rh='true' />
+        <meta property='og:description' content='來自 helmet 的 pdf Desc' data-react-helmet='true' data-rh='true' />
+        <meta property='og:image' content='https://picsum.photos/id/20/200/200' data-react-helmet='true' data-rh='true' />
       </Helmet>
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
