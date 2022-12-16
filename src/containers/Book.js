@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 function Book(props) {
   return (
     <div>
-      <Helmet>
+      <Helmet prioritizeSeoTags>
         <title>來自 Book Page</title>
         <meta property='og:title' content='來自 Book Page' />
         <meta property='og:description' content='來自 Book Page Desc' />

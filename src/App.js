@@ -6,7 +6,7 @@ import './App.css'
 function App() {
   return (
     <div className='App'>
-      <Helmet>
+      <Helmet prioritizeSeoTags>
         <title>來自 helmet 的 App</title>
         <meta property='og:title' content='來自 helmet 的 App' />
         <meta property='og:description' content='來自 helmet 的 App Desc' />
@@ -39,6 +39,9 @@ function App() {
           </Link>
           <Link style={{ color: 'lightblue', marginRight: '16px' }} to='/product'>
             product
+          </Link>
+          <Link style={{ color: 'lightblue', marginRight: '16px' }} to='/product/1'>
+            productItem
           </Link>
         </div>
 
