@@ -11,7 +11,7 @@ function App() {
         <meta property='og:title' content='來自 helmet 的 App' />
         <meta property='og:description' content='來自 helmet 的 App Desc' />
         <meta property='og:image' content='https://picsum.photos/id/20/200/200' />
-        <meta property='og:url' content='https://react-helmet-demo-mauve.vercel.app/' />
+        {/* <meta property='og:url' content='https://react-helmet-demo-mauve.vercel.app/' /> */}
       </Helmet>
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />

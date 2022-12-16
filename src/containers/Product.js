@@ -20,7 +20,7 @@ function Product(props) {
         <meta property='og:title' content='來自 Product Page' />
         <meta property='og:description' content='來自 Product Page Desc' />
         <meta property='og:image' content={list[0]?.url} />
-        <meta property='og:url' content='https://react-helmet-demo-mauve.vercel.app/product' />
+        {/* <meta property='og:url' content='https://react-helmet-demo-mauve.vercel.app/product' /> */}
       </Helmet>
       <h2>Product</h2>
     </div>
