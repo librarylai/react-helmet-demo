@@ -6,7 +6,7 @@ import './App.css'
 function App() {
   return (
     <div className='App'>
-      <Helmet prioritizeSeoTags>
+      <Helmet>
         <title>來自 helmet 的 App</title>
         <meta property='og:title' content='來自 helmet 的 App' />
         <meta property='og:description' content='來自 helmet 的 App Desc' />

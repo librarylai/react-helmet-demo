@@ -15,7 +15,7 @@ function Product(props) {
   }, [])
   return (
     <div>
-      <Helmet prioritizeSeoTags>
+      <Helmet>
         <title>來自 Product Page</title>
         <meta property='og:title' content='來自 Product Page' />
         <meta property='og:description' content='來自 Product Page Desc' />
