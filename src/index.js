@@ -31,18 +31,24 @@ const router = createBrowserRouter([
 ])
 
 const rootElement = document.getElementById('root')
-if (rootElement.hasChildNodes()) {
-  hydrate(
-    <HelmetProvider>
-      <RouterProvider router={router}></RouterProvider>
-    </HelmetProvider>,
-    rootElement
-  )
-} else {
-  render(
-    <HelmetProvider>
-      <RouterProvider router={router}></RouterProvider>
-    </HelmetProvider>,
-    rootElement
-  )
-}
+// if (rootElement.hasChildNodes()) {
+//   hydrate(
+//     <HelmetProvider>
+//       <RouterProvider router={router}></RouterProvider>
+//     </HelmetProvider>,
+//     rootElement
+//   )
+// } else {
+//   render(
+//     <HelmetProvider>
+//       <RouterProvider router={router}></RouterProvider>
+//     </HelmetProvider>,
+//     rootElement
+//   )
+// }
+hydrate(
+  <HelmetProvider>
+    <RouterProvider router={router}></RouterProvider>
+  </HelmetProvider>,
+  rootElement
+)
