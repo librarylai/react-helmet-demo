@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
+import styled from 'styled-components'
 import { Helmet } from 'react-helmet-async'
 import { useParams } from 'react-router-dom'
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`
+
 function CatBreed(props) {
   let [list, setList] = useState([])
   const param = useParams()
@@ -15,6 +26,7 @@ function CatBreed(props) {
       fetchData()
     }
   }, [])
+  console.log('list', list)
   return (
     <div>
       <Helmet>
@@ -24,6 +36,11 @@ function CatBreed(props) {
         <meta property='og:image' content={list[0]?.url} />
       </Helmet>
       <h2>Cat Breed</h2>
+      <Grid>
+        {list.map((listItem) => {
+          return <img key={listItem?.id} src={listItem?.url} alt='cat' />
+        })}
+      </Grid>
     </div>
   )
 }
