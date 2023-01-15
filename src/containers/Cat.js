@@ -21,7 +21,7 @@ function Cat(props) {
     setList(data)
   }
   useEffect(() => {
-    // fetchData()
+    fetchData()
   }, [])
   return (
     <div>

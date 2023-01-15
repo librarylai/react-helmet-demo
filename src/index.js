@@ -10,6 +10,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { hydrate, render } from 'react-dom'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Outlet, Link } from 'react-router-dom'
+
 const NavbarStyled = styled.div`
   width: 100%;
   height: 64px;
@@ -33,7 +34,7 @@ const Navbar = () => {
       <Link style={{ color: 'lightblue', marginRight: '16px' }} to='/cat'>
         Cat
       </Link>
-      <Link style={{ color: 'lightblue', marginRight: '16px' }} to='/cat/1'>
+      <Link style={{ color: 'lightblue', marginRight: '16px' }} to='/cat/beng'>
         CatItem
       </Link>
     </NavbarStyled>
@@ -75,14 +76,14 @@ const rootElement = document.getElementById('root')
 if (rootElement.hasChildNodes()) {
   hydrate(
     <HelmetProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <RouterProvider router={router} />
     </HelmetProvider>,
     rootElement
   )
 } else {
   render(
     <HelmetProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <RouterProvider router={router} />
     </HelmetProvider>,
     rootElement
   )
