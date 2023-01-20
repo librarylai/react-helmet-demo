@@ -3,16 +3,13 @@
   "public": true,
   "buildCommand": "npm run build-for-server-deploy",
   "installCommand": "npm install",
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
+  "outputDirectory": "",
+  "devCommand": "npm run start-server",
+  "functions": {
+    "server.js": {
+      "memory": 1024,
+      "maxDuration": 10
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "server.js"
-    }
-  ]
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "server.js" }]
 }
