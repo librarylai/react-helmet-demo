@@ -6,7 +6,7 @@
   "outputDirectory": "",
   "devCommand": "npm run start-server",
   "functions": {
-    "server.js": {
+    "/*.js": {
       "memory": 1024,
       "maxDuration": 10
     }
