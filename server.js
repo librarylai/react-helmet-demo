@@ -9,7 +9,7 @@ app.use('/', express.static('build'))
 // 如果要測試記得先將 react-snap 在 package.json 的 script 那段 postbuild 拿掉，並且重 build
 // 不然 replace 時會抓不到對應的字串，因為原本 react-snap 在 build 時就已經把  App.jsx 的 meta tag 給加上去了
 
-app.get('/cat', async (req, res) => {
+app.use('/cat', async (req, res) => {
   // 呼叫 API 取得 Cat 資料
   let result = await axios.get('https://api.thecatapi.com/v1/images/search?limit=25&page=0&order=desc')
   // 讀取 build/index.html 程式碼
@@ -34,7 +34,7 @@ app.get('/cat', async (req, res) => {
   res.send(htmlCodeWithMeta)
 })
 
-app.get('/cat/:id', async (req, res) => {
+app.use('/cat/:id', async (req, res) => {
   // 跟上面 Cat 一樣邏輯，只是文字更改而已，因此不在贅述。
   let result = await axios.get(`https://api.thecatapi.com/v1/images/search?breed_ids=${req.query.id}`)
   const htmlCode = await fs.readFileSync(`build/index.html`, 'utf-8')
@@ -55,7 +55,7 @@ app.get('/cat/:id', async (req, res) => {
   res.send(htmlCodeWithMeta)
 })
 
-app.get('*', (req, res) => {
+app.use('*', (req, res) => {
   res.send(fs.readFileSync(`build/index.html`, 'utf-8'))
 })
 
