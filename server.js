@@ -8,7 +8,9 @@ app.use('/', express.static('build'))
 
 // 如果要測試記得先將 react-snap 在 package.json 的 script 那段 postbuild 拿掉，並且重 build
 // 不然 replace 時會抓不到對應的字串，因為原本 react-snap 在 build 時就已經把  App.jsx 的 meta tag 給加上去了
-
+app.use('/book', (req, res) => {
+  res.end('123213213123213')
+})
 app.use('/cat', async (req, res) => {
   // 呼叫 API 取得 Cat 資料
   let result = await axios.get('https://api.thecatapi.com/v1/images/search?limit=25&page=0&order=desc')
