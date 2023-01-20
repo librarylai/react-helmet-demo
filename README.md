@@ -412,6 +412,14 @@ app.listen(port, () => {
 
 ```
 
+### 執行 Server.js
+
+上面我們已經將程式碼寫到 `server.js` 檔案內了，但我們要怎麼確定『現在是執行在 Server Side 』呢？
+
+首先，我們先在 commend line 執行 `npm run server-start` 並且到 Cat 頁面，如果在 commend line 上看到跟下圖的畫面一樣的 log 內容的話，那代表你目前是從 Server Side 所啟動的。
+
+而從 log 中可以發現到原本在 `public/index.html` 所設定的 Meta Tag 現在都被我們替換成『Server Side』開頭的字眼了。
+
 ![](https://i.imgur.com/JqCR75I.jpg)
 
 ## Reference
