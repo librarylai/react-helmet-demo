@@ -1,7 +1,7 @@
 {
   "version": 2,
   "public": true,
-  "buildCommand": "build-for-server-deploy",
+  "buildCommand": "npm run build-for-server-deploy",
   "installCommand": "npm install",
   "routes": [
     {
