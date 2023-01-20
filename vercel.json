@@ -3,13 +3,7 @@
   "public": true,
   "buildCommand": "npm run build-for-server-deploy",
   "installCommand": "npm install",
-  "outputDirectory": "",
+  "outputDirectory": "build",
   "devCommand": "npm run start-server",
-  "functions": {
-    "*.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
   "rewrites": [{ "source": "/(.*)", "destination": "server.js" }]
 }
