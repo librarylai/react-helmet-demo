@@ -3,6 +3,12 @@
   "public": true,
   "buildCommand": "npm run build-for-server-deploy",
   "installCommand": "npm install",
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
