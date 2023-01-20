@@ -27,9 +27,9 @@ function Cat(props) {
     <div>
       <Helmet>
         <title>來自 Cat Page</title>
-        <meta property='og:title' content='來自 Cat Page' />
+        {/* <meta property='og:title' content='來自 Cat Page' />
         <meta property='og:description' content='隨機顯示一堆貓咪圖' />
-        <meta property='og:image' content={list[0]?.url} />
+        <meta property='og:image' content={list[0]?.url} /> */}
       </Helmet>
       <h2>Cat</h2>
       <Grid>
