@@ -1,7 +1,7 @@
 {
-  "public": true,
   "buildCommand": "npm run build-for-server-deploy",
   "installCommand": "npm install",
   "outputDirectory": ".",
-  "devCommand": "npm run start-server"
+  "devCommand": "npm run start-server",
+  "framework": "null"
 }
