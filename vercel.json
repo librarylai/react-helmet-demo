@@ -3,5 +3,5 @@
   "installCommand": "npm install",
   "outputDirectory": ".",
   "devCommand": "npm run start-server",
-  "framework": "null"
+  "framework": null
 }
