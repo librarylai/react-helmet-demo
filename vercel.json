@@ -1,7 +1,6 @@
 {
   "buildCommand": "npm run build-for-server-deploy",
   "installCommand": "npm install",
-  "outputDirectory": ".",
-  "devCommand": "npm run start-server",
-  "framework": null
+  "outputDirectory": "build",
+  "devCommand": "npm run start"
 }
