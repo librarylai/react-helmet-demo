@@ -173,6 +173,8 @@ const router = createBrowserRouter([
 - [**react-snap**](https://github.com/stereobooster/react-snap)
 - **自己寫個簡單 Server Side Rendering 機制**
 - [**prerender.io**](https://prerender.io/)
+  - prerender 的部分這邊就不特別講解了，使用方式大概跟步驟二相似，需要自己寫一個 Express server 並且跟著網站步驟安裝 `prerender-node` 套件，大致上就可以了。
+  - ![](https://i.imgur.com/UOX0SC7.png)
 
 #### Facebook、Line Open Graph 測試網站
 
@@ -333,11 +335,13 @@ const Navbar = () => {
 
 > **這邊要注意的是：**
 >
-> 如果是照著文章一路往下實作的話，可能要先檢查一下目前 `build/index.html` 的內容是否有被 `react-snap` 蓋掉( 可能會被 App.js 的內容給蓋掉，看你的 route 如何設置 )。
+> 1. 如果是照著文章一路往下實作的話，可能要先檢查一下目前 `build/index.html` 的內容是否有被 `react-snap` 蓋掉( 可能會被 App.js 的內容給蓋掉，看你的 route 如何設置 )。
 >
-> 保險起見的話，可以先『關掉 `package.json` 中的 `postbuild`』 並且重新 build 一次，也可以順便『把 `react-helmet` 動態插入的那些 `og tag` 通通移除』，因為這些內容等等都會透過 Server 端來插入。
+> 2. 保險起見的話，可以先『關掉 `package.json` 中的 `postbuild`』 並且重新 build 一次，也可以順便『把 `react-helmet` 動態插入的那些 `og tag` 通通移除』，因為這些內容等等都會透過 Server 端來插入。
 >
-> 因為 `server.js` 中 `replace()` 的依據是以 `build/index.html` 的內容為基準。
+> 3. 且 `data-rh="true"` 的部分也可以『刪除』，不然可能會發現從 Server 端的 Commend Line 上面看到有替換，但從網頁的 Element 來看卻看不到，因為 `data-rh="true"` 會把它蓋掉，功能上應該沒有問題但怕造成誤會所以『建議也刪除』。
+>
+> 4. 因為 `server.js` 中等等會用`build/index.html` 的內容為基準，來做 `replace()` 替換內容。
 
 ```javascript=
 const express = require('express')
@@ -353,26 +357,17 @@ app.use('/', express.static('build'))
 
 
 /* cat 頁面進來這邊 */
-app.get('/cat', async (req, res) => {
+app.use('/cat', async (req, res) => {
   // 呼叫 API 取得 Cat 資料
   let result = await axios.get('https://api.thecatapi.com/v1/images/search?limit=25&page=0&order=desc')
   // 讀取 build/index.html 程式碼
   const htmlCode = await fs.readFileSync(`build/index.html`, 'utf-8')
-  // 用 replace 把原本的 title, meta tag 換成自己想要的
+  // 用 replace 把原本的 title, meta tag 內容替換成從 Server Side 寫入
   const htmlCodeWithMeta = htmlCode
-    .replace('<title>React App</title>', `<title>來自 Server Side 產生的 Cat Page</title>`)
-    .replace(
-      '<meta property="og:title" content="預設 og:title" data-rh="true" />',
-      `<meta property="og:title" content="來自 Server Side 產生的 Cat title" />`
-    )
-    .replace(
-      '<meta property="og:description" content="預設 og:desc" data-rh="true" />',
-      `<meta property="og:description" content="來自 Server Side 產生的 Cat Desc" />`
-    )
-    .replace(
-      '<meta property="og:image" content="https://picsum.photos/id/2/200/200" data-rh="true" />',
-      `<meta property="og:image" content="${result?.data?.[0]?.url}" />`
-    )
+    .replace('React App', `來自 Server Side 產生的 Cat Page`)
+    .replace('預設 og:title', `來自 Server Side 產生的 Cat title`)
+    .replace('預設 og:desc', `來自 Server Side 產生的 Cat Desc`)
+    .replace('https://picsum.photos/id/2/200/200', `${result?.data?.[0]?.url}`)
   // log 看看是否正常
   // console.log('htmlCodeWithMeta', htmlCodeWithMeta)
   // 將調整完的 程式碼 回傳給瀏覽器
@@ -380,8 +375,9 @@ app.get('/cat', async (req, res) => {
 })
 
 /* cat breed 頁面進來這邊*/
-app.get('/cat/:id', async (req, res) => {
-  // 跟上面 Cat 一樣邏輯，只是文字更改而已，因此不在贅述。
+app.use('/cat/:id', async (req, res) => {
+  // 跟上面 Cat 一樣邏輯，上面是直接將符合的文字替換掉。
+  // 這邊是模擬比較攏長的寫法（將 整段都寫出來）。
   let result = await axios.get(`https://api.thecatapi.com/v1/images/search?breed_ids=${req.query.id}`)
   const htmlCode = await fs.readFileSync(`build/index.html`, 'utf-8')
   const htmlCodeWithMeta = htmlCode
@@ -402,7 +398,7 @@ app.get('/cat/:id', async (req, res) => {
 })
 
 /* 其他頁面，通通過來這邊 */
-app.get('*', (req, res) => {
+app.use('*', (req, res) => {
   res.send(fs.readFileSync(`build/index.html`, 'utf-8'))
 })
 
@@ -416,11 +412,30 @@ app.listen(port, () => {
 
 上面我們已經將程式碼寫到 `server.js` 檔案內了，但我們要怎麼確定『現在是執行在 Server Side 』呢？
 
-首先，我們先在 commend line 執行 `npm run server-start` 並且到 Cat 頁面，如果在 commend line 上看到跟下圖的畫面一樣的 log 內容的話，那代表你目前是從 Server Side 所啟動的。
+首先，我們先在 commend line 執行 `npm run start-server` 並且到 Cat 頁面，如果在 commend line 上看到跟下圖的畫面一樣的 log 內容的話，那代表你目前是從 Server Side 所啟動的。
 
 而從 log 中可以發現到原本在 `public/index.html` 所設定的 Meta Tag 現在都被我們替換成『Server Side』開頭的字眼了。
 
 ![](https://i.imgur.com/JqCR75I.jpg)
+
+### 成果畫面
+
+最後本來想部署到 Vercel 後，在 Line 或是 Facebook 上測試看看會不會顯示『**來自 Server Side 產生...xxx**』的文字，但**因為在 Vercel 環境上用 Create-React-App 執行 Server 端碰到了一些困難**，目前還沒有找到方法讓它去 `build` 後再執行 `server.js`，因此打算改用 `Docker + GCP` 的方式來測試，這邊之後也會再寫一篇文章來介紹『用 Docker 部署到 GCP』的部分。
+
+所以這邊我們先改成透過『**重新整理**』的方式來模擬爬蟲讀進來網站時的情況，會不會出現『**來自 Server Side 產生...xxx**』的文字。
+
+![](https://i.imgur.com/8JfN8kD.gif)
+
+> 解釋：
+> 一開始為『前端』切換到 `Cat` Page 的畫面，可以看到旁邊還是『預設的 og title、desc』等字眼，接著透過重新整理來模擬『經過 Server 端』後碰到 `replace` 替換成『來自 Server Side』字眼。
+
+## 結語
+
+這次剛好因為工作上碰到要做每個商品的 Open Graph 顯示，因此與公司前輩 **_Ｊ imCat_** 一起討論了幾種解決辦法，這篇文章主要也是將這幾種實作過程記錄下來，最後我個人是比較推薦用第二種方式，也就是『自己建立 Server Side』來處理，因為彈性比較高而且也不會被套件所綁住，當然『如果公司有點資金』的話則推薦就用 [**prerender.io**](https://prerender.io/) 最省時省力。
+
+#### 以上就是【ＣＲＡ 實作動態 Open Graph】的簡單介紹，希望能對一樣使用 Create-React-App 框架的人能有一點幫助，如有任何錯誤或冒犯的地方還請各位多多指教，謝謝您的觀看。
+
+#### GitHub : [https://github.com/librarylai/react-helmet-demo](https://github.com/librarylai/react-helmet-demo)
 
 ## Reference
 
