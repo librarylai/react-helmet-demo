@@ -1,0 +1,19 @@
+# 用來跑 server.js 的 Dockerfile
+FROM node:latest
+# Docker 內部的工作目錄在 /app 
+# WORKDIR 預設如果沒有該資料夾會自動建立，請會自動 cd 到該目錄
+WORKDIR /app
+# 複製 package.json 到 /app
+COPY package.json .
+# 複製 yarn.lock 到 /app
+COPY yarn.lock .
+# 安裝套件
+RUN yarn install && yarn cache clean
+# 複製所有檔案到 /app
+COPY . .
+# 執行 yarn build-for-server-deploy
+RUN yarn build-for-server-deploy
+# 暴露 3100 port
+EXPOSE 3100
+# 執行 yarn start-server
+CMD ["yarn", "start-server"]
